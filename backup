@@ -1,0 +1,16 @@
+<Card>
+            <Card.Img
+              src="https://picsum.photos/200/300?random=1"
+              alt="Card image"
+            />
+            <Card.ImgOverlay>
+              <Badge>
+                <Card.Title>R$ 12,00</Card.Title>
+              </Badge>
+            </Card.ImgOverlay>
+            <Card.Body className="text-center">
+              <Card.Title>Nome Produto</Card.Title>
+              <Card.Text>Descrição aqui</Card.Text>
+              <Button variant="primary">Go somewhere</Button>
+            </Card.Body>
+          </Card>
