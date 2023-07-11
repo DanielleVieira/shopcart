@@ -29,7 +29,6 @@ export const reducer = (state, action) => {
       };
 
     case types.removeNotificationToQueueType:
-      console.log("passou no remove");
       return {
         ...state,
         type: action.type,
