@@ -36,6 +36,20 @@ export const reducer = (state, action) => {
         notificationsQueue: state.notificationsQueue.slice(1),
       };
 
+    case types.changeProductInCartAmountSuccessType:
+      return {
+        ...state,
+        type: action.type,
+        cart: action.payload,
+      };
+
+    case types.removeItemInCartSuccessType:
+      return {
+        ...state,
+        type: action.type,
+        cart: action.payload,
+      };
+
     default:
       return { ...state, type: action.type }; //os casos q só alteram o type passam por aqui
   }

@@ -1,16 +1,25 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { ListGroupCartContainer } from "../containers/ListGroupCart/ListGroupCartContainer";
+import { Container, Row, Col, ListGroup } from "react-bootstrap";
 import { useAppContext } from "../store/AppContext";
 import { useEffect } from "react";
 import { fetchCartAction } from "../store/actions";
+import { ListGroupItemContainer } from "../containers/ListGroupCartItem/ListGroupCartItemContainer";
 
 export const CartPage = () => {
   const { state, dispatch } = useAppContext();
 
   let totalCart = 0;
-  state.cart.forEach(
-    (product) => (totalCart += product.amount * product.price)
-  );
+  const sumTotalCart = (itemAmount = 1, itemPrice = 0) =>
+    (totalCart += itemAmount * itemPrice);
+
+  const itensAdapted = state.cart.map((item) => {
+    sumTotalCart(item.amount, item.price);
+    return {
+      ...item,
+      title: item.name,
+      text: item.description,
+      total: `R$ ${item.price}`.replace(".", ","),
+    };
+  });
 
   useEffect(() => {
     fetchCartAction(dispatch);
@@ -18,17 +27,14 @@ export const CartPage = () => {
 
   return (
     <Container as="main">
-      <ListGroupCartContainer
-        buttons={[
-          {
-            loading: false,
-            icon: "bi bi-trash",
-            variant: "danger",
-            onClick: () => console.log("LoadingButton"),
-            disabled: false,
-          },
-        ]}
-      />
+      <ListGroup as="ul">
+        {itensAdapted.map((item) => (
+          <ListGroupItemContainer
+            key={item.id}
+            item={item}
+          ></ListGroupItemContainer>
+        ))}
+      </ListGroup>
       <Row className="mt-3">
         <Col md={10}>
           <h3>{"Total"}</h3>

@@ -96,3 +96,69 @@ export const saveProductToCartAction = async (dispatch, newProduct) => {
     );
   }
 };
+
+export const changeProductInCartAmountInitAction = () => ({
+  type: types.changeProductInCartAmountInitType,
+});
+
+export const changeProductInCartAmountSuccessAction = (cart) => ({
+  type: types.changeProductInCartAmountSuccessType,
+  payload: cart,
+});
+
+export const changeProductInCartAmountFailAction = () => ({
+  type: types.changeProductInCartAmountFailType,
+});
+
+export const changeProductInCartAmountAction = async (
+  dispatch,
+  productId,
+  newAmount
+) => {
+  dispatch(changeProductInCartAmountInitAction());
+  try {
+    await sleep(1000);
+    await productsService.changeProducAmount(productId, newAmount);
+    const cart = await productsService.getCart();
+    dispatch(changeProductInCartAmountSuccessAction(cart));
+  } catch (error) {
+    dispatch(changeProductInCartAmountFailAction());
+  }
+};
+
+export const removeItemInCartInitAction = () => ({
+  type: types.removeItemInCartInitType,
+});
+
+export const removeItemInCartSuccessAction = (cart) => ({
+  type: types.removeItemInCartSuccessType,
+  payload: cart,
+});
+
+export const removeItemInCartFailAction = () => ({
+  type: types.removeItemInCartFailType,
+});
+
+export const removeItemInCartAction = async (dispatch, itemId) => {
+  dispatch(removeItemInCartInitAction());
+  try {
+    await sleep(1000);
+    await productsService.removeProductToCart(itemId);
+    const cart = await productsService.getCart();
+    dispatch(removeItemInCartSuccessAction(cart));
+    dispatch(
+      addNotificationToQueueAction({
+        variant: "success",
+        message: "Item removido do carrinho com sucesso",
+      })
+    );
+  } catch (error) {
+    dispatch(removeItemInCartFailAction());
+    dispatch(
+      addNotificationToQueueAction({
+        variant: "danger",
+        message: "Ocorreu um erro ao remover item do carrinho",
+      })
+    );
+  }
+};
