@@ -3,7 +3,7 @@ import { useAppContext } from "../../store/AppContext";
 import { ListGroupItemContainer } from "../../containers/ListGroupCartItem/ListGroupCartItemContainer";
 
 export const CartPage = () => {
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
 
   let totalCart = 0;
   const sumTotalCart = (itemAmount = 1, itemPrice = 0) =>

@@ -18,11 +18,6 @@ export const addProductToCart = async (product) => {
   return newProduct;
 };
 
-// export const getProduct = async (productId) => {
-//   const cart = await getCart();
-//   return cart.find((product) => product.id === productId);
-// };
-
 const findProductInCart = async (productId, cart) => {
   return cart.findIndex((product) => product.id === productId);
 };

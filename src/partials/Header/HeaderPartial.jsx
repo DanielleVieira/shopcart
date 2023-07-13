@@ -11,6 +11,7 @@ export const HeaderPartial = () => {
       expand="lg"
       bg="dark"
       data-bs-theme="dark"
+      fixed="top"
       className="mb-3"
     >
       <Container>
