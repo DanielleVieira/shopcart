@@ -82,7 +82,7 @@ export const saveProductToCartAction = async (dispatch, newProduct) => {
     dispatch(saveProductToCartSuccessAction(product));
     dispatch(
       addNotificationToQueueAction({
-        variant: "primary",
+        variant: "success",
         message: `${product.name} adicionado ao carrinho`,
       })
     );
@@ -143,13 +143,13 @@ export const removeItemInCartAction = async (dispatch, itemId) => {
   dispatch(removeItemInCartInitAction());
   try {
     await sleep(1000);
-    await productsService.removeProductToCart(itemId);
+    const product = await productsService.removeProductToCart(itemId);
     const cart = await productsService.getCart();
     dispatch(removeItemInCartSuccessAction(cart));
     dispatch(
       addNotificationToQueueAction({
         variant: "success",
-        message: "Item removido do carrinho com sucesso",
+        message: `${product.name} removido do carrinho com sucesso`,
       })
     );
   } catch (error) {

@@ -1,8 +1,6 @@
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
-import { useAppContext } from "../store/AppContext";
-import { useEffect } from "react";
-import { fetchCartAction } from "../store/actions";
-import { ListGroupItemContainer } from "../containers/ListGroupCartItem/ListGroupCartItemContainer";
+import { useAppContext } from "../../store/AppContext";
+import { ListGroupItemContainer } from "../../containers/ListGroupCartItem/ListGroupCartItemContainer";
 
 export const CartPage = () => {
   const { state, dispatch } = useAppContext();
@@ -17,13 +15,12 @@ export const CartPage = () => {
       ...item,
       title: item.name,
       text: item.description,
-      total: `R$ ${item.price}`.replace(".", ","),
+      total: `R$ ${item.price.toLocaleString("pt-br", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`,
     };
   });
-
-  useEffect(() => {
-    fetchCartAction(dispatch);
-  }, []);
 
   return (
     <Container as="main">
@@ -35,12 +32,15 @@ export const CartPage = () => {
           ></ListGroupItemContainer>
         ))}
       </ListGroup>
-      <Row className="mt-3">
+      <Row className="mt-3 border-top border-bottom py-3">
         <Col md={10}>
-          <h3>{"Total"}</h3>
+          <h3>{"Subtotal"}</h3>
         </Col>
         <Col>
-          <h3>{`R$ ${totalCart.toFixed(2)}`.replace(".", ",")}</h3>
+          <h3>{`R$ ${totalCart.toLocaleString("pt-br", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`}</h3>
         </Col>
       </Row>
     </Container>

@@ -66,7 +66,7 @@ export const products = [
   {
     id: 1688670667311,
     name: "Fone de Ouvido Marshall Major III",
-    price: 350.0,
+    price: 350.39,
     description: "Design clássico, qualidade de som excepcional",
     image: "https://picsum.photos/200/300?random=10",
   },

@@ -9,16 +9,23 @@ import {
 export const ListGroupItemContainer = ({ item }) => {
   const { dispatch } = useAppContext();
   const [formValue, setFormValue] = useState("");
+  const [itemAmount, setItemAmount] = useState("");
   const [buttonsLoading, setButtonsLoading] = useState({});
 
   const formHandleChange = (e) => {
     setFormValue(e.target.value);
   };
 
-  const formHandleSubmit = (e) => {
+  const formHandleBlur = () => {
+    setFormValue(itemAmount);
+  };
+
+  const formHandleSubmit = async (e) => {
     e.preventDefault();
-    if (parseInt(formValue) > 0)
-      changeProductInCartAmountAction(dispatch, item.id, formValue);
+    if (parseInt(formValue) > 0) {
+      await changeProductInCartAmountAction(dispatch, item.id, formValue);
+      setFormValue(formValue);
+    }
   };
 
   const handleClick = async (buttonId) => {
@@ -35,9 +42,13 @@ export const ListGroupItemContainer = ({ item }) => {
 
   useEffect(() => {
     if (item) {
-      setFormValue(item.amount);
+      setItemAmount(item.amount);
     }
   }, [item]);
+
+  useEffect(() => {
+    setFormValue(itemAmount);
+  }, [itemAmount]);
 
   return (
     <ListGroupItemComponent
@@ -45,6 +56,7 @@ export const ListGroupItemContainer = ({ item }) => {
       formValue={formValue}
       formOnChange={formHandleChange}
       formOnSubmit={formHandleSubmit}
+      formOnBlur={formHandleBlur}
       buttons={[
         {
           loading: buttonsLoading["remove"],

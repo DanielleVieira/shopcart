@@ -7,6 +7,7 @@ export const ListGroupItemComponent = ({
   formOnSubmit,
   formValue,
   formOnChange,
+  formOnBlur,
   buttons = [],
 }) => {
   return (
@@ -21,9 +22,12 @@ export const ListGroupItemComponent = ({
               <Col>
                 <Form onSubmit={formOnSubmit}>
                   <Form.Control
-                    type="text"
+                    type="number"
                     value={formValue}
                     onChange={formOnChange}
+                    onBlur={formOnBlur}
+                    min={1}
+                    aria-describedby="changeProductAmount"
                   />
                 </Form>
               </Col>

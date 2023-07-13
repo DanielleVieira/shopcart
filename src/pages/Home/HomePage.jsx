@@ -1,12 +1,12 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { CardComponent } from "../components/Card/CardComponent";
+import { CardComponent } from "../../components/Card/CardComponent";
 import { useEffect, useState } from "react";
-import { useAppContext } from "../store/AppContext";
+import { useAppContext } from "../../store/AppContext";
 import {
-  fetchCartAction,
   fetchProductsAction,
   saveProductToCartAction,
-} from "../store/actions";
+} from "../../store/actions";
+import "./style.css";
 
 export const HomePage = () => {
   const { state, dispatch } = useAppContext();
@@ -26,7 +26,6 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchProductsAction(dispatch);
-    fetchCartAction(dispatch);
   }, []);
 
   const productsNormalized = state.products.map((product) => ({
@@ -44,7 +43,10 @@ export const HomePage = () => {
               alt={product.name}
               title={product.name}
               text={product.description}
-              emphasis={`R$ ${product.price}`.replace(".", ",")}
+              emphasis={`R$ ${product.price.toLocaleString("pt-br", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`}
               button={{
                 label: product.saved ? "No carrinho" : "Adicionar ao carrinho",
                 loadingLabel: "Adicionando ...",
